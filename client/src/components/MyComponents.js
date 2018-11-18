@@ -1,5 +1,18 @@
 import React from "react";
 import { DrizzleContext } from "drizzle-react";
+import { AccountData } from "drizzle-react-components";
+
+const ComponentContainer = ({ drizzle, drizzleState }) => (
+  <div>
+    <h2>Account Data</h2>
+    <AccountData
+      drizzle={drizzle}
+      drizzleState={drizzleState}
+      accountIndex="0"
+      precision="3"
+    />
+  </div>
+);
 
 export default () => (
   <div>
@@ -12,7 +25,9 @@ export default () => (
           return "Loading...";
         }
 
-        return <div>Drizzle is ready.</div>
+        return (
+          <ComponentContainer drizzle={drizzle} drizzleState={drizzleState} />
+        );
       }}
     </DrizzleContext.Consumer>
   </div>
