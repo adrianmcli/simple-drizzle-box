@@ -1,26 +1,22 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Drizzle } from "drizzle";
+import { DrizzleContext } from "drizzle-react";
+
+import MyComponents from "./components/MyComponents";
+import SimpleStorage from "./contracts/SimpleStorage.json";
+
+const options = {
+  contracts: [SimpleStorage],
+  web3: { fallback: { url: "ws://127.0.0.1:9545" } }
+};
+const drizzle = new Drizzle(options);
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <DrizzleContext.Provider drizzle={drizzle}>
+        <MyComponents />
+      </DrizzleContext.Provider>
     );
   }
 }
