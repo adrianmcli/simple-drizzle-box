@@ -10,12 +10,13 @@ contract ComplexStorage {
   bytes32 public string2 = "test1236";
   string public string3 = "lets string something";
 
-  mapping (address => uint) uints1;
-  mapping (address => DeviceData) structs1;
+  mapping (address => uint) public uints1;
+  mapping (address => DeviceData) public structs1;
 
   uint[] public uintarray;
   DeviceData[] public deviceDataArray;
   DeviceData public singleDD;
+  address[] public deviceAddresses;
 
   struct DeviceData {
     string deviceBrand;
@@ -39,5 +40,18 @@ contract ComplexStorage {
 
     deviceDataArray.push(structs1[address1]);
     deviceDataArray.push(structs1[address2]);
+
+    deviceAddresses.push(address1);
+    deviceAddresses.push(address2);
+  }
+
+  function newDevice(string _brand, string _year, string _wearLevel) public {
+    structs1[msg.sender] = DeviceData(_brand, _year, _wearLevel);
+    deviceDataArray.push(structs1[msg.sender]);
+    deviceAddresses.push(msg.sender);
+  }
+
+  function getDeviceAddresses() external view returns (address[] memory) {
+      return deviceAddresses;
   }
 }
